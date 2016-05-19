@@ -1,0 +1,16 @@
+{
+  "name": "todos",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Patrick San Juan <pat.sanjuan@gmail.com>"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "dependencies": {
+    "jquery": "^2.2.3",
+    "foundation-sites": "^6.2.1"
+  }
+}
