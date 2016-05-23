@@ -11,7 +11,4 @@ func init() {
 	beego.SetStaticPath("/npm", "node_modules")
 
 	beego.Router("/", &controllers.MainController{})
-	beego.Router("/actors", &controllers.ActorsController{})
-	beego.Router("/movies", &controllers.MoviesController{})
-	beego.Router("/directors", &controllers.DirectorsController{})
 }
