@@ -1,5 +1,25 @@
-var BeegoHeader = React.createClass({
-	render: function() {
+import * as Request from "superagent";
+
+class Images {
+	constructor() {
+		this.imgUrl = "/api/images";
+	}
+
+	post(url) {
+		new Promise(function(resolve, reject) {
+			Request
+				.post(imgUrl)
+				.send({url: url, alt: 'title'})
+				.end(function(err, res) {
+					if (err) reject(err);
+					resolve();
+				})
+		});
+	}
+}
+
+class Header extends React.Component {
+	render() {
 		return (
 			<div class="column small-12">
 			  <header class="row align-center text-center">
@@ -14,17 +34,18 @@ var BeegoHeader = React.createClass({
 			</div>
 		)
 	}
-});
+}
 
-var BeegoFooter = React.createClass({
-	getInitialState: function () {
-		return {
+class Footer extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
 			website: "http://beego.me",
 			email: "astaxie@gmail.com"
-		}
-	},
+		};
+	}
 
-	render: function () {
+	render () {
 		return (
 			<div class="column small-12">
 			  <footer class="row align-center text-center">
@@ -38,18 +59,58 @@ var BeegoFooter = React.createClass({
 			</div>
 		)
 	}
-});
+}
 
-var Main = React.createClass({
-	render: function() {
+class Board extends React.Component {
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			images: []
+		};
+	}
+	
+	addImage() {
+		var url = this.refs.inputurl.value;
+		console.log("React: Add Image Executed!");
+		console.log("image: ", url);
+		Images
+			.post(url)
+			.then(function(data) {
+				console.log("Request Success! ", data);
+			})
+			.catch(function(err) {
+				console.error(err);
+			});
+	}
+
+	render() {
 		return (
 			<div>
-				<BeegoHeader />
-				<BeegoFooter />
+				<h2>Board</h2>
+				<form onSubmit={this.addImage}>
+					<input 
+						type="text"
+						placeholder="type image url here"
+						ref='inputurl'/>
+				</form>
+				{this.images}
+			</div>
+		)
+	}
+}
+
+class Main extends React.Component {
+	render() {
+		return (
+			<div>
+				<Header />
+				<Board />
+				<Footer />
 			</div>	
 		)
 	}
-});
+}
 
 ReactDOM.render(
 	<Main />,
