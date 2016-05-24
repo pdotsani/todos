@@ -6,7 +6,8 @@
   "license": "ISC",
   "dependencies": {
     "react": "^15.0.2",
-    "react-dom": "^15.0.2"
+    "react-dom": "^15.0.2",
+    "superagent": "^2.0.0-alpha.3"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.9.0",

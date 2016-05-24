@@ -1,5 +1,3 @@
-import * as Request from "superagent";
-
 class Images {
 	constructor() {
 		this.imgUrl = "/api/images";
@@ -7,13 +5,12 @@ class Images {
 
 	post(url) {
 		new Promise(function(resolve, reject) {
-			Request
-				.post(imgUrl)
+			request.post(this.imgUrl)
 				.send({url: url, alt: 'title'})
 				.end(function(err, res) {
 					if (err) reject(err);
 					resolve();
-				})
+				});
 		});
 	}
 }
@@ -45,7 +42,7 @@ class Footer extends React.Component {
 		};
 	}
 
-	render () {
+	render() {
 		return (
 			<div class="column small-12">
 			  <footer class="row align-center text-center">

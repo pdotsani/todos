@@ -8,6 +8,7 @@
     <script src="/npm/react/dist/react.min.js"></script>
     <script src="/npm/react-dom/dist/react-dom.min.js"></script>
     <script src="/bower/jquery/dist/jquery.min.js"></script>
+    <script src="/npm/superagent/superagent.js"></script>
     <link rel="stylesheet" href="/static/css/main.css">
   </head>
   <body id="app" class="row align-center"></body>
