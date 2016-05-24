@@ -6,7 +6,7 @@ var run = require('gulp-run');
 var sequence = require('gulp-sequence');
 
 gulp.task("build", function () {
-  return gulp.src("static_dev/js/app.js")
+  return gulp.src("dev/js/app.js")
     .pipe(babel())
     .pipe(gulp.dest("static/js"));
 });
