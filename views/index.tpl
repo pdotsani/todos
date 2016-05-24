@@ -2,7 +2,7 @@
 
 <html>
   <head>
-    <title>Beego</title>
+    <title>Bethany's Mess</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" href="/bower/foundation-sites/dist/foundation-flex.min.css">
     <script src="/npm/react/dist/react.min.js"></script>

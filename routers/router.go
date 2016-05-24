@@ -11,4 +11,13 @@ func init() {
 	beego.SetStaticPath("/npm", "node_modules")
 
 	beego.Router("/", &controllers.MainController{})
+
+	ns := beego.NewNamespace("/explore",
+		beego.NSNamespace("/actors",
+			beego.NSInclude(
+				&controllers.ActorsController{},
+			),
+		),
+	)
+	beego.AddNamespace(ns)
 }
