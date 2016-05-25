@@ -2,11 +2,11 @@
 
 ## Summary  
 
-Preliminary skeleton code for a golang-react app. Currently gulp only runs two tasks in default mode:  
+Preliminary skeleton code for a golang-react app. 
 
-1. Compiles `static_dev/js/app.js` using babel (react and es2015 packages).
-2. Migrates compiled version to `static/js` folder.
-3. Starts the beego localserver by running `bee go`.  
+1. `gulp 'default'` now builds the js, img, and css files, from `dev/`then migrates them to `static/`.  
+
+2. `bee run` then starts the beego build, then starts localhost.  
 
 NPM and Bower packages are linked by setting static paths via [server side router](https://github.com/pdotsani/todos/blob/master/routers/router.go)
 
