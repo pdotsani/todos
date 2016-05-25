@@ -27,6 +27,11 @@ gulp.task("build-imgs", function() {
 		.pipe(gulp.dest("static/img"))
 });
 
+gulp.task("server-tests", function() {
+	run('cd tests && go test -v && cd ..',
+		{silent: false, verbosity: 3}).exec()
+});
+
 gulp.task("run-beego", function() {
 	run('bee run', {silent: false, verbosity: 3}).exec()
 });
