@@ -44,3 +44,31 @@ func (c *ImageController) Post() {
 	// 3: Successful Post send 201 (remove if beego does this by default)
 	c.Ctx.Output.SetStatus(201)
 }
+
+func (c *ImageController) Get() {
+	// DB connection (redirect to model request later: models/neo4jconnect.go)
+	db, err := neoism.Connect("http://localhost:7474/db/data")
+	if err != nil {
+		log.Fatal("Error(neoism): Could not establish connection to db -- %s", err)
+	}
+
+	res := []struct {
+		URL string `json:"a.url"`
+		ALT string `json:"a.alt"`
+		ID  string `json:"ID(n)"`
+	}{}
+
+	getAllImages := neoism.CypherQuery{
+		Statement: `
+			MATCH (i:Image)
+			RETURN a.url, a.alt, ID(n)
+		`,
+		Result: &res,
+	}
+
+	db.Cypher(&getAllImages)
+
+	result := res[0]
+	c.Data["jsonp"] = &result
+	c.ServeJSONP()
+}

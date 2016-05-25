@@ -13,6 +13,16 @@ class Images {
 				});
 		});
 	}
+
+	getAll() {
+		new Promise(function(resolve, reject) {
+			request.get(this.imgUrl)
+				.end(function(err, res) {
+					if (err) reject(err);
+					resolve(res);
+				});
+		});
+	}
 }
 
 class Header extends React.Component {
