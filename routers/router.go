@@ -11,6 +11,8 @@ func init() {
 
 	// Images
 	beego.Router("/api/images", &controllers.ImageController{})
+	// Actors as test of DB queries
+	beego.Router("/api/actors", &controllers.ActorsController{})
 	// Route to index.tpl
 	beego.Router("/", &controllers.MainController{})
 }
