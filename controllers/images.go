@@ -1,10 +1,13 @@
 package controllers
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 	"github.com/astaxie/beego"
 	"gopkg.in/jmcvetta/neoism.v1"
 	"log"
+	"strings"
 )
 
 type ImageController struct {
@@ -17,39 +20,42 @@ type Image struct {
 
 func (c *ImageController) Post() {
 	// DB connection (redirect to model request later: models/neo4jconnect.go)
-	db, err := neoism.Connect("http://localhost:7474/db/data")
-	if err != nil {
-		log.Fatal("Error(neoism): Could not establish connection to db -- %s", err)
-	}
+	// db, err := neoism.Connect("http://neo4j:password@localhost:7474/db/data")
+	// if err != nil {
+	// 	log.Fatal("Error(neoism): Could not establish connection to db -- %s", err)
+	// }
 
 	// ROUTE LOGIC
 
 	// 1: Get parameters from post request
+	buf := new(bytes.Buffer)
+	buf.ReadFrom(c.Ctx.Request.Body)
+	str := buf.String()
 	var img Image
-	jsoninfo := []byte(c.GetString("jsoninfo"))
-	if err := json.Unmarshal(jsoninfo, &img); err != nil {
-		log.Fatalln("Error(beego): Unmarshal Failed -- %s", err)
+	dec := json.NewDecoder(strings.NewReader(str))
+	err := dec.Decode(&img)
+	if err != nil {
+		log.Fatalln(err)
 	}
+	fmt.Println("str: ", str)
+	fmt.Println("img: ", img)
 
 	// 2: Create data entry (node)
-	node, err := db.CreateNode(neoism.Props{
-		"alt": img.alt,
-		"url": img.url})
-	if err != nil {
-		log.Fatalln("Error(neoism): Node was not created -- %s", err)
-	}
-	defer node.Delete()
-	node.AddLabel("Image")
-
-	// 3: Successful Post send 201 (remove if beego does this by default)
-	c.Ctx.Output.SetStatus(201)
+	// node, err := db.CreateNode(neoism.Props{
+	// 	"alt": img.alt,
+	// 	"url": img.url})
+	// if err != nil {
+	// 	log.Fatalln("Error(neoism): Node was not created -- ", err)
+	// }
+	// defer node.Delete()
+	// node.AddLabel("Image")
 }
 
 func (c *ImageController) Get() {
 	// DB connection (redirect to model request later: models/neo4jconnect.go)
-	db, err := neoism.Connect("http://localhost:7474/db/data")
+	db, err := neoism.Connect("http://neo4j:password@localhost:7474/db/data")
 	if err != nil {
-		log.Fatal("Error(neoism): Could not establish connection to db -- %s", err)
+		log.Fatal("Error(neoism): Could not establish connection to db --", err)
 	}
 
 	res := []struct {
