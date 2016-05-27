@@ -84,3 +84,38 @@ func TestImages(t *testing.T) {
 		})
 	})
 }
+
+func TestActors(t *testing.T) {
+	// @POST
+	actor := []byte(`{"William Shatner"}`)
+	r, _ := http.NewRequest("POST", "/api/actors", bytes.NewBuffer(actor))
+	w := httptest.NewRecorder()
+	beego.BeeApp.Handlers.ServeHTTP(w, r)
+
+	beego.Trace("actors", "TestActors", "Code[%d]\n%s", w.Code, w.Body.String())
+
+	Convey("Subject: Test POST /api/actors\n", t, func() {
+		Convey("Status Code Should Be 200", func() {
+			So(w.Code, ShouldEqual, 200)
+		})
+		Convey("The Result Should Not Be Empty", func() {
+			So(w.Body.Len(), ShouldBeGreaterThan, 0)
+		})
+	})
+
+	// @GET
+	r2, _ := http.NewRequest("GET", "/api/actors", nil)
+	w2 := httptest.NewRecorder()
+	beego.BeeApp.Handlers.ServeHTTP(w2, r2)
+
+	beego.Trace("actors", "ActorList", "Code[%d]\n%s", w2.Code, w2.Body.String())
+
+	Convey("Subject: Test GET /actors\n", t, func() {
+		Convey("Status Code Should Be 200", func() {
+			So(w.Code, ShouldEqual, 200)
+		})
+		Convey("The Result Should Not Be Empty", func() {
+			So(w.Body.Len(), ShouldBeGreaterThan, 0)
+		})
+	})
+}
